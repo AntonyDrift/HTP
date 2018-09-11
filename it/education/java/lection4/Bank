@@ -1,0 +1,243 @@
+import java.util.Scanner;
+/*
+Создать класс, описывающий банкомат.
+Набор купюр, находящихся в банкомате должен задаваться тремя свойствами:
+количеством купюр номиналом 20, 50 и 100. Сделать методы для добавления денег в банкомат.
+Сделать функцию, снимающую деньги, которая принимает сумму денег, а возвращает булевое значение - успешность выполнения операции.
+При снятии денег функция должна распечатывать каким количеством купюр какого номинала выдаётся сумма.
+Создать конструктор с тремя параметрами - количеством купюр каждого номинала.
+ */
+
+
+public class Bank {
+    private int n20, n50, n100;
+    private Scanner scanner = new Scanner(System.in);
+
+    public Bank (int n20, n50 , n100 ) {
+        this.n20 = n20;
+        this.n50 = n50;
+        this.n100 = n100;
+    }
+
+    public int getN20() {
+        return n20;
+    }
+
+    public void setN20() {
+        this.n20 = n20;
+    }
+
+    public int getN50() {
+        return n50;
+    }
+
+    public void setN50() {
+        this.n50 = n50;
+    }
+
+    public int getN100() {
+        return n100;
+    }
+
+    public void setN100() {
+        this.n100 = n100;
+    }
+
+    private boolean giveMoney(int m) {
+        return (n100 * 100) + (n50 * 50) + (n20 * 20) >= m;
+    }
+
+    private int banklist() {
+        return (n100 * 100) + (n50 * 50) + (n20 * 20);
+    }
+
+    /*
+   Вкидываем деньги
+    */
+    private void addMoney(int s) {
+        switch (s) {
+            case 1:
+                System.out.println(" Введите сумму номиналом 20 руб, которую желаете положить: ");
+                System.out.println(" На ваш счет зачислено 20 руб" + n20);
+                n20 += scanner.nextInt();
+                System.out.println(" На ваш счет зачислено 20 руб" + n20);
+                break;
+            case 2:
+                System.out.println(" Введите сумму номиналом 50 руб, которую желаете положить: ");
+                System.out.println(" На ваш счет зачислено 50 руб" + n50);
+                n50 += scanner.nextInt();
+                System.out.println(" На ваш счет зачислено 50 руб" + n50);
+                break;
+            case 3:
+                System.out.println(" Введите сумму номиналом 100 руб, которую желаете положить: ");
+                System.out.println(" На ваш счет зачислено 100 руб" + n100);
+                n100 += scanner.nextInt();
+                System.out.println(" На ваш счет зачислено 100 руб" + n100);
+                break;
+            default:
+                System.out.println("Сумма введена неверно");
+                break;
+        }
+    }
+
+    private void getMoney(int m) {
+        int sum, nominal, num;
+        if (giveMoney(m)) {
+            System.out.println("В процессе выдачи...");
+            sum = banklist();
+
+            num = m / 100;
+            if (n100 >= num) {
+                if (num > 0) {
+                    n100 -= num;
+                    System.out.println("Номинал 100 руб - " + num);
+                }
+            } else {
+                m -= n100 * 100;
+
+                num = (m % 100) / 50;
+                if (num > 0) {
+                    n50 -= num;
+                    System.out.println("Номинал 50 руб" + num);
+
+                    num = ((m % 100) % 50) / 20;
+                    if (num > 0) {
+                        n20 -= num;
+                        System.out.println("Номинал 20 руб" + num);
+                    }
+                }
+            }
+        } else System.out.println("В банкомате не осталось купюр");
+
+    }
+
+    public void menu(int a) {
+        switch (a) {
+            case 1:
+                System.out.println("Выберете номинал, который желаете снять");
+                System.out.println("1:20 руб");
+                System.out.println("2:50 руб");
+                System.out.println("3:100 руб");
+                addMoney(scanner.nextInt());
+                break;
+            case 2:
+                System.out.println("Введите сумму");
+                getMoney(scanner.nextInt());
+                break;
+            case 3:
+                System.out.println(" Вывод: " + banklist());
+                break;
+            default:
+                System.out.println("Невозможно получить такую сумму");
+                break;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        BankTwo bankomat = new BankTwo(30, 40, 10);
+
+        System.out.printf("Меню банкомата:\n");
+        System.out.println();
+        System.out.printf("1.Положить деньги на счет:\n");
+        System.out.printf("2.Снять деньги со счета опред.:\n");
+        System.out.printf("3.Деньги в наличии:\n");
+        bankomat.menu(scanner.nextInt());
+
+
+        System.out.println();
+    }
+
+}
+//
+//
+//
+//
+//
+//
+//    public Scanner getScanner() {
+//        return scanner;
+//    }
+//
+//    public void set20(int ten) {
+//            this.n20 -= ten;
+//        }
+//
+//        public void set50(int fif) {
+//            this.n50 -= fif;
+//        }
+//
+//        public void set100(int hund) {
+//            this.n100 -= hund;
+//        }
+//
+//        public Bank(int ten1, int fif1, int hund1) {
+//            n20 = ten1;
+//            n50 = fif1;
+//            n100 = hund1;
+//        }
+//
+//        public int get20() {
+//            return n20 * 20;
+//        }
+//
+//        public int get50() {
+//            return n50 * 50;
+//        }
+//
+//        public int get100() {
+//            return n100 * 100;
+//        }
+//
+//        public boolean giveMyMoney(int a) {
+//            if ((n20 * 20 + n50 * 50 + n100 * 100) >= a) {
+//                return true;
+//            } else
+//                return false;
+//        }
+//
+//        public static void main(String[] args) {
+//            Bank bank = new Bank(20, 30, 40);
+//            /**
+//             * Заливаем деньги
+//             */
+//            try {
+//                Scanner scanner = new Scanner(System.in);
+//                System.out.println("Введите сумму которую необходимо положить");
+//                System.out.println("Введите количество купюр номиналом 20");
+//                int n20 = scanner.nextInt();
+//                bank.set20(n20);
+//                System.out.println("Введите количество купюр номиналом 50");
+//                int n50 = scanner.nextInt();
+//                bank.set50(n50);
+//                System.out.println("Введите количество купюр номиналом 100");
+//                int n100 = scanner.nextInt();
+//                bank.set100(n100);
+//            } catch (Exception e) {
+//                System.out.println("Неудачно!");
+//            }
+//
+//            System.out.println("Всего наличных " + (bank.get20() + bank.get50() + bank.get100()));
+//
+//            int money = 170000;
+//            /** Реализовать вычитания денег при снятии */
+//            if (bank.giveMyMoney(money)) {
+//                if (money / 100 > 0) {
+//                    bank.set100(money / 100);
+//                    if ((money % 100) / 50 > 0) {
+//                        bank.set50((money % 100) / 50);
+//                        if (((money % 100) % 50) / 20 > 0) {
+//                            bank.set20(((money % 100) % 50) / 20);
+//                        }
+//                    }
+//                }
+//            } else {
+//                System.out.println("Недостаточно денег в банкомате");
+//            }
+//
+//
+//            System.out.println("Всего наличных " + (bank.get20() + bank.get50() + bank.get100()));
+//
+//        }
+//    }
